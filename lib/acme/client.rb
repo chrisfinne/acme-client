@@ -188,8 +188,8 @@ class Acme::Client
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end
 
-  def request_challenge_validation(url:, key_authorization: nil)
-    response = post(url, payload: {})
+  def request_challenge_validation(url:, key_authorization: nil, payload: {})
+    response = post(url, payload: payload)
     arguments = attributes_from_challenge_response(response)
     Acme::Client::Resources::Challenges.new(self, **arguments)
   end

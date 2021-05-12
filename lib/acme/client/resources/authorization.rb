@@ -38,6 +38,13 @@ class Acme::Client::Resources::Authorization
   end
   alias_method :dns, :dns01
 
+  def tkauth01
+    @tkauth01 ||= challenges.find { |challenge|
+      challenge.is_a?(Acme::Client::Resources::Challenges::TKAUTH01)
+    }
+  end
+  alias_method :tkauth, :tkauth01
+
   def to_h
     {
       url: url,
@@ -54,7 +61,7 @@ class Acme::Client::Resources::Authorization
   def initialize_challenge(attributes)
     arguments = {
       type: attributes.fetch('type'),
-      status: attributes.fetch('status'),
+      status: attributes.fetch('status','pending'), # tkauth doesn't have a status attribute so default to 'pending'
       url: attributes.fetch('url'),
       token: attributes.fetch('token'),
       error: attributes['error']
