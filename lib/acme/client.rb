@@ -150,6 +150,12 @@ class Acme::Client
     Acme::Client::Resources::Order.new(self, **arguments)
   end
 
+  def finalize_without_der(url:, csr:)
+    response = post(url, payload: { csr: csr })
+    arguments = attributes_from_order_response(response)
+    Acme::Client::Resources::Order.new(self, **arguments)
+  end
+
   def certificate(url:, force_chain: nil)
     response = download(url, format: :pem)
     pem = response.body

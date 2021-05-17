@@ -24,6 +24,11 @@ class Acme::Client::Resources::Order
     true
   end
 
+  def finalize_without_der(csr:)
+    assign_attributes(**@client.finalize_without_der(url: finalize_url, csr: csr).to_h)
+    true
+  end
+
   def certificate(force_chain: nil)
     if certificate_url
       @client.certificate(url: certificate_url, force_chain: force_chain)
