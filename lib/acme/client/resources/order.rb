@@ -51,13 +51,14 @@ class Acme::Client::Resources::Order
 
   private
 
-  def assign_attributes(url:, status:, expires:, finalize_url:, authorization_urls:, identifiers:, certificate_url: nil)
+  # Add additional keys for the NetNumber order finalize step
+  def assign_attributes(url: nil, status:, expires:, finalize_url: nil, authorization_urls: nil, identifiers: nil, certificate_url: nil, finalize: nil, identifier: nil, certificate: nil)
     @url = url
     @status = status
     @expires = expires
     @finalize_url = finalize_url
     @authorization_urls = authorization_urls
     @identifiers = identifiers
-    @certificate_url = certificate_url
+    @certificate_url = certificate_url || certificate
   end
 end
